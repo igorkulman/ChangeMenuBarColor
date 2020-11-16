@@ -65,7 +65,7 @@ struct ChangeMenuBarColor: ParsableCommand {
             return nil
         }
 
-        context.draw(cgImage, in: NSScreen.main!.frame)
+        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
         context.setFillColor(color.cgColor)
         context.fill(CGRect(x: 0, y: imageSize.height - rectangleHeight, width: imageSize.width, height: rectangleHeight))
 
