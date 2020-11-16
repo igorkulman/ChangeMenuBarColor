@@ -41,3 +41,11 @@ so for example
 swift run ChangeMenuBarColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
 ```
 If everything goes well the utility will create a `wallpaper-adjusted.jpg` file with you new wallpaper image that will make the menu bar be shown in the color you want.
+
+## Limitations
+
+This utility can generate the wallpaper only for the main screen. 
+
+## Contributing
+
+All contributions are welcomed!
