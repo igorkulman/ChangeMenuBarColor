@@ -53,7 +53,7 @@ struct ChangeMenuBarColor: ParsableCommand {
             print("Writing new wallpaper file failed with \(error.localizedDescription)")
         }
 
-        print("All done!")
+        print("All done! Check out wallpaper-adjusted.jpg.")
     }
 
     private func addColoredRectangle(image: NSImage, color: NSColor, imageSize: NSSize, rectangleHeight: CGFloat) -> NSImage? {
