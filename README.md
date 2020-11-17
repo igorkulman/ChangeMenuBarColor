@@ -49,3 +49,7 @@ This utility can generate the wallpaper only for the main screen.
 ## Contributing
 
 All contributions are welcomed!
+
+### Development
+
+Use `swift package generate-xcodeproj` to generate a Xcode project you can use for development.
