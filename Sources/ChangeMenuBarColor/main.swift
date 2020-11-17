@@ -17,7 +17,7 @@ struct ChangeMenuBarColor: ParsableCommand {
 
     func run() {
         guard let color: NSColor = NSColor(hexString: self.color) else {
-            print("Invalid HEX color provided")
+            print("Invalid HEX color provided. Make sure it includes the '#' symbol, e.g: #FF0000")
             return
         }
 
@@ -26,54 +26,41 @@ struct ChangeMenuBarColor: ParsableCommand {
             return
         }
 
-        guard let mainScreen = NSScreen.main else {
-            print("Cannot get main screen")
+        guard !NSScreen.screens.isEmpty else {
+            print("Cannot detect screens")
             return
         }
 
-        let screenSize = mainScreen.frame.size
-        let menuBarHeight = screenSize.height - mainScreen.visibleFrame.height - mainScreen.visibleFrame.origin.y
+        var index = 0
 
-        guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
-            print("Cannot not resize provided wallpaper to screen size")
-            return
+        for screen in NSScreen.screens {
+            index = index+1
+
+            let screenSize = screen.frame.size
+            let menuBarHeight = screenSize.height - screen.visibleFrame.height - screen.visibleFrame.origin.y
+
+            guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
+                print("Cannot not resize provided wallpaper to screen size")
+                return
+            }
+
+            guard let adjustedWallaper = resizedWallapper.addColoredRectangle(color: color, imageSize: screenSize, rectangleHeight: menuBarHeight), let data = adjustedWallaper.jpgData else {
+                print("Cannot add colored rectangle at the top of the wallapepr image")
+                return
+            }
+
+            let workingDirectory = FileManager.default.currentDirectoryPath
+            let adjustedWallpaperFile = workingDirectory.appending("/wallpaper-screen\(index)-adjusted.jpg")
+
+            do {
+                try data.write(to: URL(fileURLWithPath: adjustedWallpaperFile))
+                print("Created new wallpaper \(adjustedWallpaperFile)")
+            } catch {
+                print("Writing new wallpaper file failed with \(error.localizedDescription)")
+            }
         }
 
-        guard let adjustedWallaper = addColoredRectangle(image: resizedWallapper, color: color, imageSize: screenSize, rectangleHeight: menuBarHeight), let data = adjustedWallaper.jpgData else {
-            print("Cannot add colored rectangle at the top of the wallapepr image")
-            return
-        }
-
-        let workingDirectory = FileManager.default.currentDirectoryPath
-        let adjustedWallpaperFile = workingDirectory.appending("/wallpaper-adjusted.jpg")
-
-        do {
-            try data.write(to: URL(fileURLWithPath: adjustedWallpaperFile))
-        } catch {
-            print("Writing new wallpaper file failed with \(error.localizedDescription)")
-        }
-
-        print("All done! Check out wallpaper-adjusted.jpg.")
-    }
-
-    private func addColoredRectangle(image: NSImage, color: NSColor, imageSize: NSSize, rectangleHeight: CGFloat) -> NSImage? {
-        guard let cgImage = image.cgImage else {
-            return nil
-        }
-
-        guard let context = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: 4 * Int(imageSize.width), space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue) else {
-            return nil
-        }
-
-        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
-        context.setFillColor(color.cgColor)
-        context.fill(CGRect(x: 0, y: imageSize.height - rectangleHeight, width: imageSize.width, height: rectangleHeight))
-
-        guard let composedImage = context.makeImage() else {
-            return nil
-        }
-
-        return NSImage(cgImage: composedImage, size: imageSize)
+        print("\nAll done!")
     }
 }
 
