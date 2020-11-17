@@ -1,6 +1,6 @@
-# Change menu bar color in Big Sur
+# Change menu bar color in macOS Big Sur
 
-Simple utility to change Big Sur menu bar color by appending a colored rectangle to a wallpaper image.
+Simple utility to change macOS Big Sur menu bar color by appending a colored rectangle to a wallpaper image.
 
 ## Motivation
 
