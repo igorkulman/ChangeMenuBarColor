@@ -18,7 +18,27 @@ With this utility you can generate a new wallpaper that makes the men bar being 
 
 ## Usage
 
-The utility is distributed as a Swift Package for now, so clone the repository
+### Binary release
+
+Download the latest published release and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file.
+
+Navigate o the directory with `ChangeMenuBarColor` and run
+
+```bash
+./ChangeMenuBarColor "path_to_your_wallpaper" "desired_hex_color"
+```
+
+so for example
+
+```bash
+./ChangeMenuBarColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
+```
+
+If everything goes well the utility will create a `wallpaper-screen1-adjusted.jpg` file with you new wallpaper image that will make the menu bar be shown in the color you want. If you have multiple screens detected, it will generate a new wallpaper file for each of those screens.
+
+### Swift Package Manager
+
+Clone the repository
 
 ```bash
 git clone https://github.com/igorkulman/ChangeMenuBarColor.git
@@ -40,6 +60,7 @@ so for example
 ```bash
 swift run ChangeMenuBarColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
 ```
+
 If everything goes well the utility will create a `wallpaper-screen1-adjusted.jpg` file with you new wallpaper image that will make the menu bar be shown in the color you want. If you have multiple screens detected, it will generate a new wallpaper file for each of those screens.
 
 ## Contributing
@@ -49,3 +70,11 @@ All contributions are welcomed!
 ### Development
 
 Use `swift package generate-xcodeproj` to generate a Xcode project you can use for development.
+
+## Author
+
+- **Igor Kulman** - *Initial work* - igor@kulman.sk
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
