@@ -12,7 +12,7 @@ Imagine you have a dark wallpaper. This dark wallpaper results in the menu bar b
 
 ![](Screenshots/Dark.png)
 
-With this utility you can generate a new wallpaper that makes the men bar being shown in any color you want, like a nice tone of gray from Catalina.
+With this utility you can generate a new wallpaper that makes the menu bar being shown in any color you want, like a nice tone of gray from Catalina.
 
 ![](Screenshots/Adjusted.png)
 
