@@ -26,31 +26,21 @@ Big Sur changed the way the menu bar is displayed. It now adopts the color of th
 
 Imagine you have a dark wallpaper. This dark wallpaper results in the menu bar being black even though you use the Light mode
 
-![](Screenshots/Dark.png)
+![Default menu bar color in macOS Big Sur](Screenshots/Dark.png)
 
 With this utility you can generate a new wallpaper that makes the menu bar being shown in any color you want, like a nice tone of gray from Catalina.
 
-![](Screenshots/Adjusted.png)
+![Custom color menu bar in macOS Big Sur](Screenshots/Adjusted.png)
 
-## Usage
+Or a custom gradient
+
+![Gradient menu bar in macOS Big Sur](Screenshots/Gradient.png)
+
+## Installation
 
 ### Binary release
 
-Download the latest published release and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file.
-
-Navigate o the directory with `ChangeMenuBarColor` and run
-
-```bash
-./ChangeMenuBarColor "path_to_your_wallpaper" "desired_hex_color"
-```
-
-so for example
-
-```bash
-./ChangeMenuBarColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
-```
-
-If everything goes well the utility will create a `wallpaper-screen1-adjusted.jpg` file with you new wallpaper image that will make the menu bar be shown in the color you want. If you have multiple screens detected, it will generate a new wallpaper file for each of those screens.
+Download the latest published release and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file that you can use.
 
 ### Swift Package Manager
 
@@ -68,16 +58,40 @@ cd ChangeMenuBarColor
 and run
 
 ```bash
-swift run ChangeMenuBarColor "path_to_your_wallpaper" "desired_hex_color"
+swift build -c release
 ```
 
-so for example
+To create a `ChangeMenuBarColor` executable file in `.build/release`.
+
+## Usage
+
+### Solid color
+
+To create a new wallpaper file with a solid color rectangle that matches the menu bar, run
+
+```swift
+./ChangeMenuBarColor SolidColor "path_to_your_wallpaper" "desired_hex_color"
+```
+
+So for example
 
 ```bash
-swift run ChangeMenuBarColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
+./ChangeMenuBarColor SolidColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
 ```
 
-If everything goes well the utility will create a `wallpaper-screen1-adjusted.jpg` file with you new wallpaper image that will make the menu bar be shown in the color you want. If you have multiple screens detected, it will generate a new wallpaper file for each of those screens.
+### Gradient
+
+To create a new wallpaper file with a gradient rectangle at the top, run
+
+```swift
+./ChangeMenuBarColor Gradient "path_to_your_wallpaper" "start_hex_color" "end_hex_color"
+```
+
+So for example
+
+```swift
+./ChangeMenuBarColor Gradient "/Users/igorkulman/wallpaper.jpg" "#FF0000" "#00FF00"
+```
 
 ## Support the project
 

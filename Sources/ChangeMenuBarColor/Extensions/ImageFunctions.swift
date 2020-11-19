@@ -13,7 +13,7 @@ func createGradientImage(startColor: NSColor, endColor: NSColor, width: CGFloat,
         return nil
     }
 
-    context.drawLinearGradient(CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [NSColor.red.cgColor, NSColor.blue.cgColor] as CFArray, locations: [0.0, 1.0])!, start: CGPoint(x: 0, y: 0), end: CGPoint(x: width, y: 0), options: [])
+    context.drawLinearGradient(CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [startColor.cgColor, endColor.cgColor] as CFArray, locations: [0.0, 1.0])!, start: CGPoint(x: 0, y: 0), end: CGPoint(x: width, y: 0), options: [])
 
     guard let composedImage = context.makeImage() else {
         return nil
