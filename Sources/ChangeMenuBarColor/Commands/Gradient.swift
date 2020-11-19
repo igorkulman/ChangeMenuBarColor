@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 import SwiftHEXColors
 
-struct Gradient: ParsableCommand {
+struct Gradient: Command {
     static let configuration = CommandConfiguration(
         commandName: "Gradient",
         abstract: "Adds gradient rectangle"
@@ -25,60 +25,41 @@ struct Gradient: ParsableCommand {
     @Argument(help: "HEX color to use for gradient end")
     private var endColor: String
 
-    func run() {
+    func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {
         guard let startColor: NSColor = NSColor(hexString: self.startColor) else {
             print("Invalid HEX color provided as gradient start color. Make sure it includes the '#' symbol, e.g: #FF0000")
-            return
+            return nil
         }
 
         guard let endColor: NSColor = NSColor(hexString: self.endColor) else {
             print("Invalid HEX color provided as gradient end color. Make sure it includes the '#' symbol, e.g: #FF0000")
-            return
+            return nil
         }
 
         guard let wallpaper = NSImage(contentsOfFile: wallpaper) else {
             print("Cannot read the provided wallpaper file as image")
-            return
+            return nil
         }
 
         guard !NSScreen.screens.isEmpty else {
             print("Cannot detect screens")
-            return
+            return nil
         }
 
-        var index = 0
-
-        for screen in NSScreen.screens {
-            index = index+1
-
-            let screenSize = screen.frame.size
-            let menuBarHeight = screenSize.height - screen.visibleFrame.height - screen.visibleFrame.origin.y
-
-            guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
-                print("Cannot not resize provided wallpaper to screen size")
-                return
-            }
-
-            guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screenSize.width, height: menuBarHeight) else {
-                return
-            }
-
-            guard let combined = combineImages(baseImage: resizedWallapper, addedImage: topImage), let data = combined.jpgData else {
-                return
-            }
-
-            let workingDirectory = FileManager.default.currentDirectoryPath
-            let adjustedWallpaperFile = workingDirectory.appending("/wallpaper-screen\(index)-adjusted.jpg")
-
-            do {
-                try data.write(to: URL(fileURLWithPath: adjustedWallpaperFile))
-                print("Created new wallpaper \(adjustedWallpaperFile)")
-            } catch {
-                print("Writing new wallpaper file failed with \(error.localizedDescription)")
-            }
+        guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
+            print("Cannot not resize provided wallpaper to screen size")
+            return nil
         }
 
-        print("\nAll done!")
+        guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screenSize.width, height: menuBarHeight) else {
+            return nil
+        }
+
+        return combineImages(baseImage: resizedWallapper, addedImage: topImage)
+    }
+
+    func run() {
+        process()
     }
 }
 
