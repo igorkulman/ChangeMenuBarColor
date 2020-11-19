@@ -16,11 +16,11 @@
   <a href="https://www.buymeacoffee.com/igorkulman" target="_blank"><img height="21" src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
 </p>
 
-Simple utility to change macOS Big Sur menu bar color by appending a colored rectangle to a wallpaper image.
+Simple utility to change macOS Big Sur menu bar color by appending a solid color or gradient rectangle to a wallpaper image.
 
 ## Motivation
 
-Big Sur changed the way the menu bar is displayed. It now adopts the color of the wallpaper, which may not always be what you would like. This utility allows you to specify the color of the menu bar you want to use.
+Big Sur changed the way the menu bar is displayed. It now adopts the color of the wallpaper, which may not always be what you would like. This utility allows you to specify the solid color or gradient of the menu bar you want to use.
 
 ### Example
 
