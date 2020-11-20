@@ -44,7 +44,7 @@ class Command {
                 generatedImages.append(adjustedWallpaperFile)
                 print("Created new wallpaper for screen \(index)".blue)
             } catch {
-                print("Writing new wallpaper file failed with \(error.localizedDescription)  for screen \(index)".red)
+                print("Writing new wallpaper file failed with \(error.localizedDescription) for screen \(index)".red)
             }
             print("\n")
         }
@@ -53,7 +53,7 @@ class Command {
         for image in generatedImages {
             print("\(image)\n".blue)
         }
-        print("Do not forget to set the generated wallpaer images as your desktop background!".yellow)
+        print("Do not forget to set the generated wallpaper images as your desktop background!".yellow)
     }
 
     func loadWallpaperImage(wallpaper: String?) -> NSImage? {
@@ -63,7 +63,7 @@ class Command {
                 return nil
             }
 
-            print("Loaded \(path) to be used as wallaper image")
+            print("Loaded \(path) to be used as wallpaper image")
             return wallpaper
         }
 

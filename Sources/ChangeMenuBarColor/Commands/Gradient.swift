@@ -41,7 +41,7 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
+        guard let resizedWallpaper = wallpaper.resized(to: screenSize) else {
             print("Cannot not resize provided wallpaper to screen size".red)
             return nil
         }
@@ -51,7 +51,7 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        return combineImages(baseImage: resizedWallapper, addedImage: topImage)
+        return combineImages(baseImage: resizedWallpaper, addedImage: topImage)
     }
 }
 
