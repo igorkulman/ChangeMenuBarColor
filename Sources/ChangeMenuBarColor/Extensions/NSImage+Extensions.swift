@@ -7,6 +7,7 @@
 
 import Foundation
 import Cocoa
+import Rainbow
 
 extension NSImage {
     var cgImage: CGImage? {
@@ -16,6 +17,7 @@ extension NSImage {
 
     func resized(to newSize: NSSize) -> NSImage? {
         guard let bitmapRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0) else {
+            print("Cannot create bitmap image for resizing".red)
             return nil
         }
 
@@ -32,6 +34,7 @@ extension NSImage {
 
     var jpgData: Data? {
         guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else {
+            print("Cannot create data from bitmap image".red)
             return nil
         }
 
