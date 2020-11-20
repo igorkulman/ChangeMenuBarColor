@@ -8,6 +8,7 @@
 import ArgumentParser
 import Foundation
 import Cocoa
+import Rainbow
 import SwiftHEXColors
 
 class Command {
@@ -16,17 +17,23 @@ class Command {
     }
 
     func run() {
+        print("Starting up".green)
+        print("Found \(NSScreen.screens.count) screens\n")
+
+        var generatedImages: [String] = []
         var index = 0
 
         for screen in NSScreen.screens {
             index = index+1
 
+            print("Processing screen \(index) of \(NSScreen.screens.count)")
+
             let screenSize = screen.frame.size
             let menuBarHeight = screenSize.height - screen.visibleFrame.height - screen.visibleFrame.origin.y
 
             guard let adjustedWallpaper = createWallpaper(screenSize: screenSize, menuBarHeight: menuBarHeight), let data = adjustedWallpaper.jpgData else {
-                print("Could not generate new wallpaper")
-                return
+                print("Could not generate new wallpaper for screen \(index)".red)
+                continue
             }
 
             let workingDirectory = FileManager.default.currentDirectoryPath
@@ -34,30 +41,38 @@ class Command {
 
             do {
                 try data.write(to: URL(fileURLWithPath: adjustedWallpaperFile))
-                print("Created new wallpaper \(adjustedWallpaperFile)")
+                generatedImages.append(adjustedWallpaperFile)
+                print("Created new wallpaper for screen \(index)".blue)
             } catch {
-                print("Writing new wallpaper file failed with \(error.localizedDescription)")
+                print("Writing new wallpaper file failed with \(error.localizedDescription)  for screen \(index)".red)
             }
+            print("\n")
         }
 
-        print("\nAll done!")
+        print("All done! Here is the list of generated wallpaper images:".green)
+        for image in generatedImages {
+            print("\(image)\n".blue)
+        }
+        print("Do not forget to set the generated wallpaer images as your desktop background!".yellow)
     }
 
     func loadWallpaperImage(wallpaper: String?) -> NSImage? {
-        if let wallpaper = wallpaper {
-            guard let wallpaper = NSImage(contentsOfFile: wallpaper) else {
-                print("Cannot read the provided wallpaper file as image")
+        if let path = wallpaper {
+            guard let wallpaper = NSImage(contentsOfFile: path) else {
+                print("Cannot read the provided wallpaper file as image. Check if the path is correct and if it is a valid image file".red)
                 return nil
             }
 
+            print("Loaded \(path) to be used as wallaper image")
             return wallpaper
         }
 
-        print("Using currently set wallpaper")
         guard let path = getCurrentWallpaperPath(), let wallpaper = NSImage(contentsOfFile: path) else {
-            print("Cannot read macOS wallpaper")
+            print("Cannot read the currently set macOS wallpaper".red)
             return nil
         }
+
+        print("Using currently set macOS wallpaper \(path)")
 
         return wallpaper
     }

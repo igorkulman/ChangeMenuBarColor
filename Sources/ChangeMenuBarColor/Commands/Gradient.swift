@@ -8,6 +8,7 @@
 import ArgumentParser
 import Foundation
 import Cocoa
+import Rainbow
 import SwiftHEXColors
 
 final class Gradient: Command, ParsableCommand {
@@ -31,25 +32,21 @@ final class Gradient: Command, ParsableCommand {
         }
 
         guard let startColor: NSColor = NSColor(hexString: self.startColor) else {
-            print("Invalid HEX color provided as gradient start color. Make sure it includes the '#' symbol, e.g: #FF0000")
+            print("Invalid HEX color provided as gradient start color. Make sure it includes the '#' symbol, e.g: #FF0000".red)
             return nil
         }
 
         guard let endColor: NSColor = NSColor(hexString: self.endColor) else {
-            print("Invalid HEX color provided as gradient end color. Make sure it includes the '#' symbol, e.g: #FF0000")
-            return nil
-        }        
-
-        guard !NSScreen.screens.isEmpty else {
-            print("Cannot detect screens")
+            print("Invalid HEX color provided as gradient end color. Make sure it includes the '#' symbol, e.g: #FF0000".red)
             return nil
         }
 
         guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
-            print("Cannot not resize provided wallpaper to screen size")
+            print("Cannot not resize provided wallpaper to screen size".red)
             return nil
         }
 
+        print("Generating gradient image")
         guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screenSize.width, height: menuBarHeight) else {
             return nil
         }
