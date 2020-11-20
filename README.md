@@ -70,28 +70,44 @@ To create a `ChangeMenuBarColor` executable file in `.build/release`.
 To create a new wallpaper file with a solid color rectangle that matches the menu bar, run
 
 ```swift
-./ChangeMenuBarColor SolidColor "path_to_your_wallpaper" "desired_hex_color"
+./ChangeMenuBarColor SolidColor "desired_hex_color" "optional_path_to_your_wallpaper" 
 ```
 
 So for example
 
 ```bash
-./ChangeMenuBarColor SolidColor "/Users/igorkulman/wallpaper.jpg" "#CCCCCC"
+./ChangeMenuBarColor SolidColor "#CCCCCC" "/Users/igorkulman/wallpaper.jpg"
 ```
+
+If you do not provide the wallpaper path
+
+```swift
+./ChangeMenuBarColor SolidColor "#CCCCCC"
+```
+
+the currently set wallpaper will be used.
 
 ### Gradient
 
 To create a new wallpaper file with a gradient rectangle at the top, run
 
 ```swift
-./ChangeMenuBarColor Gradient "path_to_your_wallpaper" "start_hex_color" "end_hex_color"
+./ChangeMenuBarColor Gradient "start_hex_color" "end_hex_color" "optional_path_to_your_wallpaper"
 ```
 
 So for example
 
 ```swift
-./ChangeMenuBarColor Gradient "/Users/igorkulman/wallpaper.jpg" "#FF0000" "#00FF00"
+./ChangeMenuBarColor Gradient "#FF0000" "#00FF00" "/Users/igorkulman/wallpaper.jpg"
 ```
+
+If you do not provide the wallpaper path
+
+```swift
+./ChangeMenuBarColor Gradient "#FF0000" "#00FF00"
+```
+
+the currently set wallpaper will be used.
 
 ## Support the project
 

@@ -10,14 +10,11 @@ import Foundation
 import Cocoa
 import SwiftHEXColors
 
-struct Gradient: Command {
+final class Gradient: Command, ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "Gradient",
         abstract: "Adds gradient rectangle"
     )
-
-    @Argument(help: "Wallpaper to use")
-    private var wallpaper: String
 
     @Argument(help: "HEX color to use for gradient start")
     private var startColor: String
@@ -25,7 +22,14 @@ struct Gradient: Command {
     @Argument(help: "HEX color to use for gradient end")
     private var endColor: String
 
-    func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {
+    @Argument(help: "Wallpaper to use. If not provided the current macOS wallpaper will be used")
+    private var wallpaper: String?
+
+    override func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {        
+        guard let wallpaper = loadWallpaperImage(wallpaper: wallpaper) else {
+            return nil
+        }
+
         guard let startColor: NSColor = NSColor(hexString: self.startColor) else {
             print("Invalid HEX color provided as gradient start color. Make sure it includes the '#' symbol, e.g: #FF0000")
             return nil
@@ -34,12 +38,7 @@ struct Gradient: Command {
         guard let endColor: NSColor = NSColor(hexString: self.endColor) else {
             print("Invalid HEX color provided as gradient end color. Make sure it includes the '#' symbol, e.g: #FF0000")
             return nil
-        }
-
-        guard let wallpaper = NSImage(contentsOfFile: wallpaper) else {
-            print("Cannot read the provided wallpaper file as image")
-            return nil
-        }
+        }        
 
         guard !NSScreen.screens.isEmpty else {
             print("Cannot detect screens")
@@ -56,10 +55,6 @@ struct Gradient: Command {
         }
 
         return combineImages(baseImage: resizedWallapper, addedImage: topImage)
-    }
-
-    func run() {
-        process()
     }
 }
 

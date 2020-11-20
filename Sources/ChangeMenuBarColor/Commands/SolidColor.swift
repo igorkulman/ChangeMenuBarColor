@@ -10,26 +10,25 @@ import Foundation
 import Cocoa
 import SwiftHEXColors
 
-struct SolidColor: Command {
+final class SolidColor: Command, ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "SolidColor",
         abstract: "Adds solid color rectangle"
     )
 
-    @Argument(help: "Wallpaper to use")
-    private var wallpaper: String
-
     @Argument(help: "HEX color to use for the menu bar")
     private var color: String
 
-    func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {
-        guard let color: NSColor = NSColor(hexString: self.color) else {
-            print("Invalid HEX color provided. Make sure it includes the '#' symbol, e.g: #FF0000")
+    @Argument(help: "Wallpaper to use. If not provided the current macOS wallpaper will be used")
+    private var wallpaper: String?
+
+    override func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {
+        guard let wallpaper = loadWallpaperImage(wallpaper: wallpaper) else {
             return nil
         }
 
-        guard let wallpaper = NSImage(contentsOfFile: wallpaper) else {
-            print("Cannot read the provided wallpaper file as image")
+        guard let color: NSColor = NSColor(hexString: self.color) else {
+            print("Invalid HEX color provided. Make sure it includes the '#' symbol, e.g: #FF0000")
             return nil
         }
 
@@ -48,10 +47,6 @@ struct SolidColor: Command {
         }
 
         return combineImages(baseImage: resizedWallapper, addedImage: topImage)
-    }
-
-    func run() {
-        process()
     }
 }
 
