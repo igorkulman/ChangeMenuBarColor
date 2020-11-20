@@ -8,6 +8,7 @@
 import ArgumentParser
 import Foundation
 import Cocoa
+import Rainbow
 import SwiftHEXColors
 
 final class SolidColor: Command, ParsableCommand {
@@ -28,20 +29,16 @@ final class SolidColor: Command, ParsableCommand {
         }
 
         guard let color: NSColor = NSColor(hexString: self.color) else {
-            print("Invalid HEX color provided. Make sure it includes the '#' symbol, e.g: #FF0000")
-            return nil
-        }
-
-        guard !NSScreen.screens.isEmpty else {
-            print("Cannot detect screens")
+            print("Invalid HEX color provided. Make sure it includes the '#' symbol, e.g: #FF0000".red)
             return nil
         }
 
         guard let resizedWallapper = wallpaper.resized(to: screenSize) else {
-            print("Cannot not resize provided wallpaper to screen size")
+            print("Cannot not resize provided wallpaper to screen size".red)
             return nil
         }
 
+        print("Generating solid color image")
         guard let topImage = createSolidImage(color: color, width: screenSize.width, height: menuBarHeight) else {
             return nil
         }
