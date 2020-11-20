@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "ChangeMenuBarColor",
+    platforms: [
+        .macOS(.v11)
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
         .package(url: "https://github.com/thii/SwiftHEXColors.git", from: "1.3.1")
