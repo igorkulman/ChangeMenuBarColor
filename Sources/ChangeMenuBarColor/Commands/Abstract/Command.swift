@@ -6,6 +6,7 @@
 //
 
 import ArgumentParser
+import Files
 import Foundation
 import Cocoa
 import Rainbow
@@ -20,7 +21,6 @@ class Command {
         print("Starting up".green)
         print("Found \(NSScreen.screens.count) screens\n")
 
-        var generatedImages: [String] = []
         var index = 0
 
         for screen in NSScreen.screens {
@@ -36,25 +36,10 @@ class Command {
                 continue
             }
 
-            let workingDirectory = FileManager.default.currentDirectoryPath
-            let adjustedWallpaperFile = workingDirectory.appending("/wallpaper-screen\(index)-adjusted.jpg")
-
-            do {
-                try data.write(to: URL(fileURLWithPath: adjustedWallpaperFile))
-                generatedImages.append(adjustedWallpaperFile)
-                print("Created new wallpaper for screen \(index)".blue)
-            } catch {
-                print("Writing new wallpaper file failed with \(error.localizedDescription) for screen \(index)".red)
-            }
-            print("\n")
+            setWallpaper(screen: screen, wallpaper: data, index: index)
         }
 
         print("All done!".green)
-        print("Here is the list of generated wallpaper images:".green)
-        for image in generatedImages {
-            print("\(image)\n".blue)
-        }
-        print("Do not forget to set the generated wallpaper images as your desktop background!".yellow)
     }
 
     func loadWallpaperImage(wallpaper: String?) -> NSImage? {
@@ -77,6 +62,27 @@ class Command {
         print("Using currently set macOS wallpaper \(path)")
 
         return wallpaper
+    }
+
+    private func setWallpaper(screen: NSScreen, wallpaper: Data, index: Int) {
+        guard let supportFiles = try? Folder.library?.subfolder(at: "Application Support"), let workingDirectory = try? supportFiles.createSubfolderIfNeeded(at: "ChangeMenuBarColor") else {
+            print("Cannot access Application Support folder".red)
+            return
+        }
+
+        do {
+            let generatedWallpaperFile = workingDirectory.url.appendingPathComponent("/wallpaper-screen\(index)-adjusted-\(UUID().uuidString).jpg")
+            try? FileManager.default.removeItem(at: generatedWallpaperFile)
+
+            try wallpaper.write(to: generatedWallpaperFile)
+            print("Created new wallpaper for screen \(index) in \(generatedWallpaperFile.absoluteString)")
+
+            try NSWorkspace.shared.setDesktopImageURL(generatedWallpaperFile, for: screen, options: [:])
+            print("Wallpper set".blue)
+        } catch {
+            print("Writing new wallpaper file failed with \(error.localizedDescription) for screen \(index)".red)
+        }
+        print("\n")
     }
 
     private func getCurrentWallpaperPath() -> String? {
