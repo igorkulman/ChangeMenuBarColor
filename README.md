@@ -61,13 +61,13 @@ and run
 swift build -c release
 ```
 
-To create a `ChangeMenuBarColor` executable file in `.build/release`.
+to create a `ChangeMenuBarColor` executable file in `.build/release`.
 
 ## Usage
 
 ### Solid color
 
-To create a new wallpaper file with a solid color rectangle that matches the menu bar, run
+To set a new wallpaper file with a solid color rectangle that matches the menu bar, run
 
 ```swift
 ./ChangeMenuBarColor SolidColor "desired_hex_color" "optional_path_to_your_wallpaper" 
@@ -89,7 +89,7 @@ the currently set wallpaper will be used.
 
 ### Gradient
 
-To create a new wallpaper file with a gradient rectangle at the top, run
+To set a new wallpaper file with a gradient rectangle at the top, run
 
 ```swift
 ./ChangeMenuBarColor Gradient "start_hex_color" "end_hex_color" "optional_path_to_your_wallpaper"
@@ -108,6 +108,10 @@ If you do not provide the wallpaper path
 ```
 
 the currently set wallpaper will be used.
+
+## Known issues
+
+Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will not be able to use it and will fail.
 
 ## Support the project
 
