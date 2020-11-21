@@ -71,7 +71,7 @@ class Command {
             print("Created new wallpaper for screen \(screen.index) in \(generatedWallpaperFile.absoluteString)")
 
             try NSWorkspace.shared.setDesktopImageURL(generatedWallpaperFile, for: screen, options: [:])
-            print("Wallpper set".blue)
+            print("Wallpaper set".blue)
         } catch {
             print("Writing new wallpaper file failed with \(error.localizedDescription) for screen \(screen.index)".red)
         }
