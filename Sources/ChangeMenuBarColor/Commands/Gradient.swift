@@ -26,8 +26,8 @@ final class Gradient: Command, ParsableCommand {
     @Argument(help: "Wallpaper to use. If not provided the current macOS wallpaper will be used")
     private var wallpaper: String?
 
-    override func createWallpaper(screenSize: CGSize, menuBarHeight: CGFloat) -> NSImage? {        
-        guard let wallpaper = loadWallpaperImage(wallpaper: wallpaper) else {
+    override func createWallpaper(screen: NSScreen) -> NSImage? {
+        guard let wallpaper = loadWallpaperImage(wallpaper: wallpaper, screen: screen) else {
             return nil
         }
 
@@ -41,13 +41,13 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        guard let resizedWallpaper = wallpaper.resized(to: screenSize) else {
+        guard let resizedWallpaper = wallpaper.resized(to: screen.size) else {
             print("Cannot not resize provided wallpaper to screen size".red)
             return nil
         }
 
         print("Generating gradient image")
-        guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screenSize.width, height: menuBarHeight) else {
+        guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screen.size.width, height: screen.menuBarHeight) else {
             return nil
         }
 
