@@ -49,7 +49,8 @@ class Command {
             print("\n")
         }
 
-        print("All done! Here is the list of generated wallpaper images:".green)
+        print("All done!".green)
+        print("Here is the list of generated wallpaper images:".green)
         for image in generatedImages {
             print("\(image)\n".blue)
         }
@@ -69,6 +70,7 @@ class Command {
 
         guard let path = getCurrentWallpaperPath(), let wallpaper = NSImage(contentsOfFile: path) else {
             print("Cannot read the currently set macOS wallpaper".red)
+            print("Try providing a specific wallpaper as a parameter instead".blue)
             return nil
         }
 
@@ -89,7 +91,11 @@ class Command {
 
         task.standardOutput = outputPipe
 
-        try? task.run()
+        do {
+            try task.run()
+        } catch {
+            print("Trying to get the currenty set macOS wallpaper failed with \(error)")
+        }
 
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(decoding: outputData, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
