@@ -99,6 +99,6 @@ class Command {
 
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(decoding: outputData, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
-        return output.replacingOccurrences(of: "~", with: FileManager.default.homeDirectoryForCurrentUser.path)
+        return NSString(string: output).expandingTildeInPath
     }
 }
