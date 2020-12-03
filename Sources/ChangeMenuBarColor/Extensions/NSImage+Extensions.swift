@@ -15,23 +15,6 @@ extension NSImage {
         return self.cgImage(forProposedRect: &rect, context: nil, hints: nil)
     }
 
-    func resized(to newSize: NSSize) -> NSImage? {
-        guard let bitmapRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0) else {
-            print("Cannot create bitmap image for resizing".red)
-            return nil
-        }
-
-        bitmapRep.size = newSize
-        NSGraphicsContext.saveGraphicsState()
-        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
-        draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
-        NSGraphicsContext.restoreGraphicsState()
-
-        let resizedImage = NSImage(size: newSize)
-        resizedImage.addRepresentation(bitmapRep)
-        return resizedImage
-    }
-
     var jpgData: Data? {
         guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else {
             print("Cannot create data from bitmap image".red)
