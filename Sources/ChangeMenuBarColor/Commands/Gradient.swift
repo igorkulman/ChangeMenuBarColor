@@ -41,7 +41,7 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        guard let resizedWallpaper = wallpaper.resized(to: screen.size) else {
+        guard let resizedWallpaper = wallpaper.crop(size: screen.size) else {
             print("Cannot not resize provided wallpaper to screen size".red)
             return nil
         }
