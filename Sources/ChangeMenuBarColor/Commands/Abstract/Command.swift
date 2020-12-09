@@ -20,15 +20,22 @@ class Command {
     func run() {
         print("Starting up".green)
         print("Found \(NSScreen.screens.count) screens\n")
-
+        guard let mainScreen = NSScreen.main else {
+            print("Cannot find main screen".red)
+            return
+        }
         for screen in NSScreen.screens {
             print("Processing screen \(screen.index) of \(NSScreen.screens.count)")
-
+            
+            if screen != mainScreen {
+                print("The screen \(screen.index) isn't main screen".red)
+                continue
+            }  
             guard let adjustedWallpaper = createWallpaper(screen: screen), let data = adjustedWallpaper.jpgData else {
                 print("Could not generate new wallpaper for screen \(screen.index)".red)
                 continue
             }
-
+            
             setWallpaper(screen: screen, wallpaper: data)
         }
 
