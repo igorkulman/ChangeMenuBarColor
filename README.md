@@ -61,7 +61,11 @@ and run
 swift build -c release
 ```
 
-to create a `ChangeMenuBarColor` executable file in `.build/release`.
+to create a `ChangeMenuBarColor` executable file in `.build/release`. Ideally copy it to the project directory with
+
+```
+cp .build/release/ChangeMenuBarColor .
+```
 
 ## Usage
 
