@@ -40,7 +40,7 @@ Or a custom gradient
 
 ### Binary release
 
-Download the latest published release and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file that you can use.
+Download the latest published release and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file that you can use. **Make sure you execute all the commands from the directory where you unziped the files**.
 
 ### Swift Package Manager
 
@@ -61,7 +61,7 @@ and run
 swift build -c release
 ```
 
-to create a `ChangeMenuBarColor` executable file in `.build/release`. Ideally copy it to the project directory with
+to create a `ChangeMenuBarColor` executable file in `.build/release`. **Ideally copy it to the project directory with**
 
 ```
 cp .build/release/ChangeMenuBarColor .
