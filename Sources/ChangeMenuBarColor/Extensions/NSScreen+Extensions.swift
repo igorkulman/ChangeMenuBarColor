@@ -16,8 +16,4 @@ extension NSScreen {
     var menuBarHeight: CGFloat {
         return size.height - visibleFrame.height - visibleFrame.origin.y
     }
-
-    var index: Int {
-        (NSScreen.screens.firstIndex(of: self) ?? 0) + 1
-    }
 }
