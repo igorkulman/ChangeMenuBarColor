@@ -24,7 +24,7 @@ Big Sur changed the way the menu bar is displayed. It now adopts the color of th
 
 ### Example
 
-Imagine you have a dark wallpaper. This dark wallpaper results in the menu bar being black even though you use the Light mode
+Imagine you have a dark wallpaper ([here is mine](https://www.wallpaperflare.com/silhouette-of-mountain-simple-simple-background-minimalism-wallpaper-phxwd)). This dark wallpaper results in the menu bar being black even though you use the Light mode
 
 ![Default menu bar color in macOS Big Sur](Screenshots/Dark.png)
 
