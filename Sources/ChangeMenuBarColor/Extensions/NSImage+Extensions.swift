@@ -7,7 +7,6 @@
 
 import Foundation
 import Cocoa
-import Rainbow
 
 extension NSImage {
     var cgImage: CGImage? {
@@ -17,7 +16,7 @@ extension NSImage {
 
     var jpgData: Data? {
         guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else {
-            print("Cannot create data from bitmap image".red)
+            Log.error("Cannot create data from bitmap image")
             return nil
         }
 

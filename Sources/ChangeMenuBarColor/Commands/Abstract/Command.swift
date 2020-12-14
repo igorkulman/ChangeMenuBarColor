@@ -9,7 +9,6 @@ import ArgumentParser
 import Files
 import Foundation
 import Cocoa
-import Rainbow
 import SwiftHEXColors
 
 class Command {
@@ -18,63 +17,61 @@ class Command {
     }
 
     func run() {
-        print("Starting up".green)
+        Log.info("Starting up")
 
         guard let screen = NSScreen.main else {
-            print("Could not find the main screen".red)
+            Log.error("Could not find the main screen")
             return
         }
 
         guard let adjustedWallpaper = createWallpaper(screen: screen), let data = adjustedWallpaper.jpgData else {
-            print("Could not generate new wallpaper for screen \(screen.index)".red)
+            Log.error("Could not generate new wallpaper fr the main screen")
             return
         }
 
         setWallpaper(screen: screen, wallpaper: data)
 
-        print("All done!".green)
+        Log.info("All done!")
     }
 
     func loadWallpaperImage(wallpaper: String?, screen: NSScreen) -> NSImage? {
         if let path = wallpaper {
             guard let wallpaper = NSImage(contentsOfFile: path) else {
-                print("Cannot read the provided wallpaper file as image. Check if the path is correct and if it is a valid image file".red)
+                Log.error("Cannot read the provided wallpaper file as image. Check if the path is correct and if it is a valid image file")
                 return nil
             }
 
-            print("Loaded \(path) to be used as wallpaper image")
+            Log.debug("Loaded \(path) to be used as wallpaper image")
             return wallpaper
         }
 
         guard let path = NSWorkspace.shared.desktopImageURL(for: screen), let wallpaper = NSImage(contentsOf: path) else {
-            print("Cannot read the currently set macOS wallpaper".red)
-            print("Try providing a specific wallpaper as a parameter instead".blue)
+            Log.error("Cannot read the currently set macOS wallpaper. Try providing a specific wallpaper as a parameter instead.")
             return nil
         }
 
-        print("Using currently set macOS wallpaper \(path)")
+        Log.debug("Using currently set macOS wallpaper \(path)")
 
         return wallpaper
     }
 
     private func setWallpaper(screen: NSScreen, wallpaper: Data) {
         guard let supportFiles = try? Folder.library?.subfolder(at: "Application Support"), let workingDirectory = try? supportFiles.createSubfolderIfNeeded(at: "ChangeMenuBarColor") else {
-            print("Cannot access Application Support folder".red)
+            Log.error("Cannot access Application Support folder")
             return
         }
 
         do {
-            let generatedWallpaperFile = workingDirectory.url.appendingPathComponent("/wallpaper-screen\(screen.index)-adjusted-\(UUID().uuidString).jpg")
+            let generatedWallpaperFile = workingDirectory.url.appendingPathComponent("/wallpaper-screen-adjusted-\(UUID().uuidString).jpg")
             try? FileManager.default.removeItem(at: generatedWallpaperFile)
 
             try wallpaper.write(to: generatedWallpaperFile)
-            print("Created new wallpaper for screen \(screen.index) in \(generatedWallpaperFile.absoluteString)")
+            Log.debug("Created new wallpaper for the main screen in \(generatedWallpaperFile.absoluteString)")
 
             try NSWorkspace.shared.setDesktopImageURL(generatedWallpaperFile, for: screen, options: [:])
-            print("Wallpaper set".blue)
+            Log.info("Wallpaper set")
         } catch {
-            print("Writing new wallpaper file failed with \(error.localizedDescription) for screen \(screen.index)".red)
+            Log.error("Writing new wallpaper file failed with \(error.localizedDescription) for the main screen")
         }
-        print("\n")
     }
 }

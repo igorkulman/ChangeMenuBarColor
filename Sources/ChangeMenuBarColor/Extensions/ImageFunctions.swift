@@ -7,18 +7,17 @@
 
 import Foundation
 import Cocoa
-import Rainbow
 
 func createGradientImage(startColor: NSColor, endColor: NSColor, width: CGFloat, height: CGFloat) -> NSImage? {
     guard let context = createContext(width: width, height: height) else {
-        print("Could not create graphical context for gradient image".red)
+        Log.error("Could not create graphical context for gradient image")
         return nil
     }
 
     context.drawLinearGradient(CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [startColor.cgColor, endColor.cgColor] as CFArray, locations: [0.0, 1.0])!, start: CGPoint(x: 0, y: 0), end: CGPoint(x: width, y: 0), options: [])
 
     guard let composedImage = context.makeImage() else {
-        print("Could not create composed image for gradient image".red)
+        Log.error("Could not create composed image for gradient image")
         return nil
     }
 
@@ -27,7 +26,7 @@ func createGradientImage(startColor: NSColor, endColor: NSColor, width: CGFloat,
 
 func createSolidImage(color: NSColor, width: CGFloat, height: CGFloat) -> NSImage? {
     guard let context = createContext(width: width, height: height) else {
-        print("Could not create graphical context for solid color image".red)
+        Log.error("Could not create graphical context for solid color image")
         return nil
     }
 
@@ -35,7 +34,7 @@ func createSolidImage(color: NSColor, width: CGFloat, height: CGFloat) -> NSImag
     context.fill(CGRect(x: 0, y: 0, width: width, height: height))
 
     guard let composedImage = context.makeImage() else {
-        print("Could not create composed image for solid color image".red)
+        Log.error("Could not create composed image for solid color image")
         return nil
     }
 
@@ -44,12 +43,12 @@ func createSolidImage(color: NSColor, width: CGFloat, height: CGFloat) -> NSImag
 
 func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
     guard let context = createContext(width: baseImage.size.width, height: baseImage.size.height) else {
-        print("Could not create graphical context when merging images".red)
+        Log.error("Could not create graphical context when merging images")
         return nil
     }
 
     guard let baseImageCGImage = baseImage.cgImage, let addedImageCGImage = addedImage.cgImage else {
-        print("Could not create cgImage when merging images".red)
+        Log.error("Could not create cgImage when merging images")
         return nil
     }
 
@@ -57,7 +56,7 @@ func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
     context.draw(addedImageCGImage, in: CGRect(x: 0, y: baseImage.size.height - addedImage.size.height, width: addedImage.size.width, height: addedImage.size.height))
 
     guard let composedImage = context.makeImage() else {
-        print("Could not create composed image when merging with the wallpaper".red)
+        Log.error("Could not create composed image when merging with the wallpaper")
         return nil
     }
 
