@@ -46,11 +46,7 @@ Download the [latest published release](https://github.com/igorkulman/ChangeMenu
 
 ### Swift Package Manager
 
-You need Xcode or at least Xcode Command Line tools installed to make the utility to compile. The simplest way to install Xcode Command Line Tools is running
-
-```bash
-xcode-select --install
-```
+To build the utility you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed.
 
 Clone the repository
 
