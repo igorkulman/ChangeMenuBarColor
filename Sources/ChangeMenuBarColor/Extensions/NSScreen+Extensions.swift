@@ -10,10 +10,10 @@ import Cocoa
 
 extension NSScreen {
     var size: CGSize {
-        return frame.size
+        return CGSize(width: frame.size.width * backingScaleFactor, height: frame.size.height * backingScaleFactor)
     }
 
     var menuBarHeight: CGFloat {
-        return size.height - visibleFrame.height - visibleFrame.origin.y
+        return (frame.size.height - visibleFrame.height - visibleFrame.origin.y) * backingScaleFactor
     }
 }
