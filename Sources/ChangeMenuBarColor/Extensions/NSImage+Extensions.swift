@@ -20,7 +20,7 @@ extension NSImage {
             return nil
         }
 
-        return bitmapImage.representation(using: .jpeg, properties: [:])
+        return bitmapImage.representation(using: .jpeg, properties: [NSBitmapImageRep.PropertyKey.compressionFactor : 1])
     }
     
     var height: CGFloat {
