@@ -22,6 +22,13 @@ final class SolidColor: Command, ParsableCommand {
     @Argument(help: "Wallpaper to use. If not provided the current macOS wallpaper will be used")
     private var wallpaper: String?
 
+    @Flag(help: "Flag to set wallpaper for all displays not just the main display")
+    private var allDisplays: Bool = false
+
+    override var useAllDisplays: Bool {
+        return allDisplays
+    }
+
     override func createWallpaper(screen: NSScreen) -> NSImage? {
         guard let wallpaper = loadWallpaperImage(wallpaper: wallpaper, screen: screen) else {
             return nil

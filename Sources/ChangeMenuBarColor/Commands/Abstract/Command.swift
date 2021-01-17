@@ -13,25 +13,33 @@ import SwiftHEXColors
 
 class Command {
     func createWallpaper(screen: NSScreen) -> NSImage? {
-        return nil
+        fatalError("Override for each type")
+    }
+
+    var useAllDisplays: Bool {
+        fatalError("Override for each type")
     }
 
     func run() {
-        Log.info("Starting up")
+        Log.info("Starting up\n")
 
-        guard let screen = NSScreen.main else {
-            Log.error("Could not find the main screen")
+        let screens: [NSScreen] = useAllDisplays ? NSScreen.screens : [NSScreen.main].compactMap({ $0 })
+
+        guard !screens.isEmpty else {
+            Log.error("Could not detect any screens")
             return
         }
 
-        guard let adjustedWallpaper = createWallpaper(screen: screen), let data = adjustedWallpaper.jpgData else {
-            Log.error("Could not generate new wallpaper fr the main screen")
-            return
+        for (index, screen) in screens.enumerated() {
+            guard let adjustedWallpaper = createWallpaper(screen: screen), let data = adjustedWallpaper.jpgData else {
+                Log.error("Could not generate new wallpaper screen \(index)")
+                continue
+            }
+
+            setWallpaper(screen: screen, wallpaper: data)
         }
 
-        setWallpaper(screen: screen, wallpaper: data)
-
-        Log.info("All done!")
+        Log.info("\nAll done!")
     }
 
     func loadWallpaperImage(wallpaper: String?, screen: NSScreen) -> NSImage? {
