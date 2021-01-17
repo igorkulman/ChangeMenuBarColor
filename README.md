@@ -117,6 +117,10 @@ If you do not provide the wallpaper path
 
 the currently set wallpaper will be used.
 
+#### Multiple displays
+
+If you use multiple displays and want the wallpaper generated for all of them, add the `--all-displays` flag at the end of the command, so for example `./ChangeMenuBarColor Gradient "#FF0000" "#00FF00" --all-displays`.
+
 ## Known issues
 
 Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will not be able to use it and will fail.
