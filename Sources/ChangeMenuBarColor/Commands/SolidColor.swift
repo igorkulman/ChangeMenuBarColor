@@ -5,6 +5,7 @@
 //  Created by Igor Kulman on 19.11.2020.
 //
 
+import Accessibility
 import ArgumentParser
 import Foundation
 import Cocoa
@@ -44,7 +45,7 @@ final class SolidColor: Command, ParsableCommand {
             return nil
         }
 
-        Log.debug("Generating solid color image")
+        Log.debug("Generating \(AXNameFromColor(color.cgColor)) solid color image")
         guard let topImage = createSolidImage(color: color, width: screen.size.width, height: screen.menuBarHeight) else {
             return nil
         }

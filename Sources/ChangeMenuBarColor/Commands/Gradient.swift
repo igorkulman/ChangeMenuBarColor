@@ -5,6 +5,7 @@
 //  Created by Igor Kulman on 19.11.2020.
 //
 
+import Accessibility
 import ArgumentParser
 import Foundation
 import Cocoa
@@ -51,7 +52,7 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        Log.debug("Generating gradient image")
+        Log.debug("Generating gradient image from \(AXNameFromColor(startColor.cgColor)) to \(AXNameFromColor(endColor.cgColor))")
         guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screen.size.width, height: screen.menuBarHeight) else {
             return nil
         }
