@@ -52,7 +52,7 @@ final class Gradient: Command, ParsableCommand {
             return nil
         }
 
-        Log.debug("Generating gradient image from \(AXNameFromColor(startColor.cgColor)) to \(AXNameFromColor(endColor.cgColor))")
+        Log.debug("Generating gradient image from \(colorName(startColor)) to \(colorName(endColor))")
         guard let topImage = createGradientImage(startColor: startColor, endColor: endColor, width: screen.size.width, height: screen.menuBarHeight) else {
             return nil
         }

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "ChangeMenuBarColor",
     platforms: [
-        .macOS(.v11)
+        .macOS(.v10_15)
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),

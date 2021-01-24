@@ -5,6 +5,9 @@
 //  Created by Igor Kulman on 19.11.2020.
 //
 
+#if canImport(Accessibility)
+    import Accessibility
+#endif
 import Foundation
 import Cocoa
 
@@ -65,4 +68,12 @@ func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
 
 func createContext(width: CGFloat, height: CGFloat) -> CGContext? {
     return CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
+}
+
+func colorName(_ color: NSColor) -> String {
+    if #available(OSX 11.0, *) {
+        return AXNameFromColor(color.cgColor)
+    } else {
+        return color.description
+    }
 }
