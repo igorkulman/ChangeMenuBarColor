@@ -46,7 +46,7 @@ Download the [latest published release](https://github.com/igorkulman/ChangeMenu
 
 ### Swift Package Manager
 
-To build the utility you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed.
+To build the utility you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once.
 
 Clone the repository
 
