@@ -129,7 +129,7 @@ If you use multiple displays and want the wallpaper generated for all of them, a
 
 Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will not be able to use it and will fail.
 
-## Catalina support
+### Catalina support
 
 The utility builds and runs on Catalina but the menu bar on Catalina works in a different way that on Big Sur so the result will never be the same as on Big Sur.
 
