@@ -8,7 +8,6 @@
 import ArgumentParser
 import Foundation
 import Cocoa
-import SwiftHEXColors
 
 struct ChangeMenuBarColor: ParsableCommand {
     static let configuration = CommandConfiguration(

@@ -8,7 +8,6 @@
 import ArgumentParser
 import Foundation
 import Cocoa
-import SwiftHEXColors
 
 final class SolidColor: Command, ParsableCommand {
     static let configuration = CommandConfiguration(
