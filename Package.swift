@@ -10,7 +10,6 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
-        .package(url: "https://github.com/thii/SwiftHEXColors.git", from: "1.3.1"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "3.0.0"),
         .package(url: "https://github.com/JohnSundell/Files", from: "4.0.0")
     ],
@@ -21,7 +20,6 @@ let package = Package(
             name: "ChangeMenuBarColor",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "SwiftHEXColors", package: "SwiftHEXColors"),
                 .product(name: "Rainbow", package: "Rainbow"),
                 .product(name: "Files", package: "Files")
             ]),

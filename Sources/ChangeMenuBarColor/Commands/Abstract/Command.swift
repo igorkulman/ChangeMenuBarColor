@@ -9,7 +9,6 @@ import ArgumentParser
 import Files
 import Foundation
 import Cocoa
-import SwiftHEXColors
 
 class Command {
     func createWallpaper(screen: NSScreen) -> NSImage? {
