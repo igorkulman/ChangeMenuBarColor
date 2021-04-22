@@ -127,7 +127,7 @@ If you use multiple displays and want the wallpaper generated for all of them, a
 
 ## Known issues
 
-Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will not be able to use it and will fail.
+Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will convert it to a static .jpg image.
 
 ### Catalina support
 
