@@ -44,7 +44,9 @@ Download the [latest published release](https://github.com/igorkulman/ChangeMenu
 
 **Make sure you execute all the commands from the directory where you unziped the files**. So if you unziped the release to a `ChangeMenuBarColor` directory you need to enter it with a `cd ChangeMenuBarColor` before running the utility.
 
-### Swift Package Manager
+The binary release is **not guaranteed to work** as it depends on a few factors in your macOS installation. If it does not work for you, build the utility from source.
+
+### Building from source
 
 To build the utility you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once.
 
@@ -126,6 +128,8 @@ If you use multiple displays and want the wallpaper generated for all of them, a
 <a href="https://www.buymeacoffee.com/igorkulman" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Known issues
+
+Make sure **Automatically hide and show the menu bar** is **disabled**. This setting causes the utility to incorrectly detect the menu bar size.
 
 Dynamic wallpapers are not supported at the moment. If you use a dynamic wallpaper the utility will convert it to a static .jpg image.
 
