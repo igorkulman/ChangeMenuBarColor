@@ -14,6 +14,12 @@ extension NSScreen {
     }
 
     var menuBarHeight: CGFloat {
-        return (frame.size.height - visibleFrame.height - visibleFrame.origin.y) * backingScaleFactor
+        let computedHeight = (frame.size.height - visibleFrame.height - visibleFrame.origin.y) * backingScaleFactor
+        guard computedHeight > 0 else {
+            Log.debug("Menu bar height computation is still not good, using approximation")
+            return 25 * backingScaleFactor
+        }
+
+        return computedHeight
     }
 }
