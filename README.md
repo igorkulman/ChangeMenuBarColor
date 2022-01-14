@@ -38,40 +38,23 @@ Or a custom gradient
 
 ## Installation
 
-### Binary release
+### Mint
 
-Download the [latest published release](https://github.com/igorkulman/ChangeMenuBarColor/releases/latest/download/ChangeMenuBarColor.zip) and unzip the `ChangeMenuBarColor.zip` file. It will create a `ChangeMenuBarColor` executable file that you can use. 
+The easiest and preferred way to install and run the tools is with [Mint](ttps://github.com/yonaskolb/Mint).
 
-**Make sure you execute all the commands from the directory where you unziped the files**. So if you unziped the release to a `ChangeMenuBarColor` directory you need to enter it with a `cd ChangeMenuBarColor` before running the utility.
-
-The binary release is **not guaranteed to work** as it depends on a few factors in your macOS installation. If it does not work for you, build the utility from source.
-
-### Building from source
-
-To build the utility you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once.
-
-Clone the repository
+First install [Mint](ttps://github.com/yonaskolb/Mint) with [Homebrew](https://brew.sh/)
 
 ```bash
-git clone https://github.com/igorkulman/ChangeMenuBarColor.git
+brew install mint
 ```
-enter it
+
+Next run 
 
 ```bash
-cd ChangeMenuBarColor
+mint run igorkulman/ChangeMenuBarColor
 ```
 
-and run
-
-```bash
-swift build -c release
-```
-
-to create a `ChangeMenuBarColor` executable file in `.build/release`. **Ideally copy it to the project directory with**
-
-```
-cp .build/release/ChangeMenuBarColor .
-```
+and if everything is OK you can use my utility be downloaded and run for the first time. You are ready to go!
 
 ## Usage
 
@@ -79,20 +62,20 @@ cp .build/release/ChangeMenuBarColor .
 
 To set a new wallpaper file with a solid color rectangle that matches the menu bar, run
 
-```swift
-./ChangeMenuBarColor SolidColor "desired_hex_color" "optional_path_to_your_wallpaper" 
+```bash
+mint run igorkulman/ChangeMenuBarColorSolidColor "desired_hex_color" "optional_path_to_your_wallpaper" 
 ```
 
 So for example
 
 ```bash
-./ChangeMenuBarColor SolidColor "#CCCCCC" "/Users/igorkulman/wallpaper.jpg"
+mint run igorkulman/ChangeMenuBarColor SolidColor "#CCCCCC" "/Users/igorkulman/wallpaper.jpg"
 ```
 
 If you do not provide the wallpaper path
 
-```swift
-./ChangeMenuBarColor SolidColor "#CCCCCC"
+```bash
+mint run igorkulman/ChangeMenuBarColor SolidColor "#CCCCCC"
 ```
 
 the currently set wallpaper will be used.
@@ -101,20 +84,20 @@ the currently set wallpaper will be used.
 
 To set a new wallpaper file with a gradient rectangle at the top, run
 
-```swift
-./ChangeMenuBarColor Gradient "start_hex_color" "end_hex_color" "optional_path_to_your_wallpaper"
+```bash
+mint run igorkulman/ChangeMenuBarColor Gradient "start_hex_color" "end_hex_color" "optional_path_to_your_wallpaper"
 ```
 
 So for example
 
-```swift
-./ChangeMenuBarColor Gradient "#FF0000" "#00FF00" "/Users/igorkulman/wallpaper.jpg"
+```bash
+mint run igorkulman/ChangeMenuBarColor Gradient "#FF0000" "#00FF00" "/Users/igorkulman/wallpaper.jpg"
 ```
 
 If you do not provide the wallpaper path
 
-```swift
-./ChangeMenuBarColor Gradient "#FF0000" "#00FF00"
+```bash
+mint run igorkulman/ChangeMenuBarColor Gradient "#FF0000" "#00FF00"
 ```
 
 the currently set wallpaper will be used.
@@ -140,10 +123,6 @@ The utility builds and runs on Catalina but the menu bar on Catalina works in a 
 ## Contributing
 
 All contributions are welcomed!
-
-### Development
-
-Use `swift package generate-xcodeproj` to generate a Xcode project you can use for development.
 
 ## Author
 
