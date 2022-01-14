@@ -23,8 +23,5 @@ let package = Package(
                 .product(name: "Rainbow", package: "Rainbow"),
                 .product(name: "Files", package: "Files")
             ]),
-        .testTarget(
-            name: "ChangeMenuBarColorTests",
-            dependencies: ["ChangeMenuBarColor"]),
     ]
 )
