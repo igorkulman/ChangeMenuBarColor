@@ -8,6 +8,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_15)
     ],
+    products: [
+        .executable(name: "ChangeMenuBarColor", targets: ["ChangeMenuBarColor"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "3.0.0"),
