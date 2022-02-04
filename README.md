@@ -36,17 +36,15 @@ Or a custom gradient
 
 ![Gradient menu bar in macOS Big Sur](Screenshots/Gradient.png)
 
-## Requirements
-
-Due to [Swift Package Manager limitations](https://forums.swift.org/t/only-command-line-tools-installed-xctest-executable-not-found/34088) you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once for the installation from source code to work.
-
 ## Installation
 
 ### Mint
 
 The easiest and preferred way to install and run the tools is with [Mint](ttps://github.com/yonaskolb/Mint).
 
-First install [Mint](ttps://github.com/yonaskolb/Mint) with [Homebrew](https://brew.sh/)
+Due to [Swift Package Manager limitations](https://forums.swift.org/t/only-command-line-tools-installed-xctest-executable-not-found/34088) you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once for the installation from source code to work.
+
+After you installed Xcode install [Mint](ttps://github.com/yonaskolb/Mint) with [Homebrew](https://brew.sh/)
 
 ```bash
 brew install mint
@@ -60,7 +58,15 @@ mint run igorkulman/ChangeMenuBarColor
 
 and if everything is OK you can use my utility be downloaded and run for the first time. You are ready to go!
 
+### Binary release
+
+If you do not want to install Xcode and Mint you can download [the latest binary release](https://github.com/igorkulman/ChangeMenuBarColor/releases/latest). 
+
+The binary release is not signed so it might not work on all systems.
+
 ## Usage
+
+All the commands shown are for the utility being installed via Mint. If you downloaded the latest binary release replace `mint run igorkulman/ChangeMenuBarColorSolidColor` with `path/to/unzipped/ChangeMenuBarColorSolidColor`.
 
 ### Solid color
 
