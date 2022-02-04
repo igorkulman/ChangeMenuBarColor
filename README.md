@@ -36,6 +36,10 @@ Or a custom gradient
 
 ![Gradient menu bar in macOS Big Sur](Screenshots/Gradient.png)
 
+## Requirements
+
+Due to [Swift Package Manager limitations](https://forums.swift.org/t/only-command-line-tools-installed-xctest-executable-not-found/34088) you need to have [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) installed and opened at least once for the installation from source code to work.
+
 ## Installation
 
 ### Mint
