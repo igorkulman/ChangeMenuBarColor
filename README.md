@@ -116,6 +116,11 @@ the currently set wallpaper will be used.
 
 If you use multiple displays and want the wallpaper generated for all of them, add the `--all-displays` flag at the end of the command, so for example `./ChangeMenuBarColor Gradient "#FF0000" "#00FF00" --all-displays`.
 
+## Uninstall
+
+- manually set any new wallpaper
+- run `mint uninstall igorkulman/ChangeMenuBarColor` if you installed the utility via `mint` or delete the folder with the utility if you downloaded it manually.
+
 ## Support the project
 
 <a href="https://www.buymeacoffee.com/igorkulman" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
