@@ -69,7 +69,7 @@ class Command {
         }
 
         do {
-            let generatedWallpaperFile = workingDirectory.url.appendingPathComponent("/wallpaper-screen-adjusted-\(UUID().uuidString).jpg")
+            let generatedWallpaperFile = workingDirectory.url.appendingPathComponent("wallpaper-screen-adjusted-\(UUID().uuidString).jpg")
             try? FileManager.default.removeItem(at: generatedWallpaperFile)
 
             try wallpaper.write(to: generatedWallpaperFile)
@@ -77,6 +77,16 @@ class Command {
 
             try NSWorkspace.shared.setDesktopImageURL(generatedWallpaperFile, for: screen, options: [:])
             Log.info("Wallpaper set")
+
+            let oldWallpaperFiles = workingDirectory.files.filter({ $0.url != generatedWallpaperFile })
+            guard !oldWallpaperFiles.isEmpty else {
+                return
+            }
+
+            Log.info("Deleting old wallpaper files from previous runs")
+            oldWallpaperFiles.forEach {
+                try? $0.delete()
+            }
         } catch {
             Log.error("Writing new wallpaper file failed with \(error.localizedDescription) for the main screen")
         }
