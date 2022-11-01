@@ -23,14 +23,6 @@ extension NSImage {
         return bitmapImage.representation(using: .jpeg, properties: [NSBitmapImageRep.PropertyKey.compressionFactor : 1])
     }
     
-    var height: CGFloat {
-        return self.size.height
-    }
-
-    var width: CGFloat {
-        return self.size.width
-    }
-    
     func copy(size: NSSize) -> NSImage? {
         // Create a new rect with given width and height
         let frame = NSMakeRect(0, 0, size.width, size.height)
@@ -59,13 +51,13 @@ extension NSImage {
     func resizeWhileMaintainingAspectRatioToSize(size: NSSize) -> NSImage? {
         let newSize: NSSize
         
-        let widthRatio  = size.width / self.width
-        let heightRatio = size.height / self.height
+        let widthRatio  = size.width / self.size.width
+        let heightRatio = size.height / self.size.height
         
         if widthRatio > heightRatio {
-            newSize = NSSize(width: floor(self.width * widthRatio), height: floor(self.height * widthRatio))
+            newSize = NSSize(width: floor(self.size.width * widthRatio), height: floor(self.size.height * widthRatio))
         } else {
-            newSize = NSSize(width: floor(self.width * heightRatio), height: floor(self.height * heightRatio))
+            newSize = NSSize(width: floor(self.size.width * heightRatio), height: floor(self.size.height * heightRatio))
         }
         
         return self.copy(size: newSize)
@@ -76,9 +68,10 @@ extension NSImage {
         guard let resized = self.resizeWhileMaintainingAspectRatioToSize(size: size) else {
             return nil
         }
+
         // Get some points to center the cropping area.
-        let x = floor((resized.width - size.width) / 2)
-        let y = floor((resized.height - size.height) / 2)
+        let x = floor((resized.size.width - size.width) / 2)
+        let y = floor((resized.size.height - size.height) / 2)
         
         // Create the cropping frame.
         let frame = NSMakeRect(x, y, size.width, size.height)
