@@ -74,6 +74,11 @@ extension NSImage {
             return nil
         }
 
+        // the image centering is needed only when the resized image does not exactly match the screen size
+        guard resized.size != size else {
+            return resized
+        }
+
         // Get some points to center the cropping area.
         let x = floor((resized.size.width - size.width) / 2)
         let y = floor((resized.size.height - size.height) / 2)
