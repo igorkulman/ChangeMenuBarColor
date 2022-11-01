@@ -64,6 +64,11 @@ extension NSImage {
     }
     
     func crop(size: NSSize) -> NSImage? {
+        // only resize when the size actually differs
+        guard size != self.size else {
+            return self
+        }
+
         // Resize the current image, while preserving the aspect ratio.
         guard let resized = self.resizeWhileMaintainingAspectRatioToSize(size: size) else {
             return nil
