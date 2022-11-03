@@ -56,6 +56,18 @@ class Command {
             Log.error("Cannot read the currently set macOS wallpaper. Try providing a specific wallpaper as a parameter instead.")
             return nil
         }
+        
+        var maxImageSize = NSSize(width: 0, height: 0)
+        for i in 0...(wallpaper.representations.count-1)
+        {
+                let rep = wallpaper.representations[i]
+                let imageSize = NSSize(width: rep.pixelsWide, height: rep.pixelsHigh)
+                if (imageSize.width >= maxImageSize.width) || (imageSize.height >= maxImageSize.height)
+                {
+                    maxImageSize = imageSize
+                }
+        }
+        wallpaper.size = maxImageSize
 
         Log.debug("Using currently set macOS wallpaper \(path)")
 
