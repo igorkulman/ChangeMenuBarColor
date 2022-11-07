@@ -57,6 +57,7 @@ class Command {
             return nil
         }
 
+        wallpaper.adjustSize()
         Log.debug("Using currently set macOS wallpaper \(path)")
 
         return wallpaper
