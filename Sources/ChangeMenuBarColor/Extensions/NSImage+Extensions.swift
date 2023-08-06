@@ -112,7 +112,7 @@ extension NSImage {
     }
 
     // Images loaded from file sometimes do not report the size correctly, see https://stackoverflow.com/questions/9264051/nsimage-size-not-real-size-with-some-pictures
-    // This can lead to artifcats produces bby resizing operations
+    // This can lead to artifacts produced by resizing operations
     func adjustSize() {
         // use the biggest sizes from all the representations https://stackoverflow.com/a/38523158/581164
         size = representations.reduce(size) { size, representation in
