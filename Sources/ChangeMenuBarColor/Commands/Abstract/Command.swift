@@ -52,6 +52,13 @@ class Command {
             return wallpaper
         }
 
+        // Use our new function to get the original wallpaper directly from the file
+        if let originalWallpaper = getOriginalWallpaper(for: screen) {
+            originalWallpaper.adjustSize()
+            return originalWallpaper
+        }
+
+        // Fallback to the old method if our new function fails
         guard let path = NSWorkspace.shared.desktopImageURL(for: screen), let wallpaper = NSImage(contentsOf: path) else {
             Log.error("Cannot read the currently set macOS wallpaper. Try providing a specific wallpaper as a parameter instead.")
             return nil

@@ -45,37 +45,58 @@ func createSolidImage(color: NSColor, width: CGFloat, height: CGFloat) -> NSImag
 }
 
 func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
-    guard let context = createContext(width: baseImage.size.width, height: baseImage.size.height) else {
-        Log.error("Could not create graphical context when merging images")
-        return nil
-    }
-
-    guard let baseImageCGImage = baseImage.cgImage, let addedImageCGImage = addedImage.cgImage else {
-        Log.error("Could not create cgImage when merging images")
-        return nil
-    }
-
-    // Draw the base image (wallpaper)
-    context.draw(baseImageCGImage, in: CGRect(x: 0, y: 0, width: baseImage.size.width, height: baseImage.size.height))
+    // Create a high-quality representation context
+    let width = baseImage.size.width
+    let height = baseImage.size.height
     
-    // The original method calculated this rect incorrectly for some displays
-    // So we'll ensure we're only drawing the menu bar portion
-    let menuBarPortionRect = CGRect(
-        x: 0, 
-        y: baseImage.size.height - addedImage.size.height,
-        width: baseImage.size.width,  // Ensure we cover the full width
-        height: min(addedImage.size.height, 40 * NSScreen.main?.backingScaleFactor ?? 2) // Safety limit
+    // Create bitmap representation with higher quality options
+    let rep = NSBitmapImageRep(
+        bitmapDataPlanes: nil,
+        pixelsWide: Int(width),
+        pixelsHigh: Int(height),
+        bitsPerSample: 8,
+        samplesPerPixel: 4,
+        hasAlpha: true,
+        isPlanar: false,
+        colorSpaceName: .calibratedRGB,
+        bytesPerRow: 0,
+        bitsPerPixel: 0
     )
     
-    // Draw the menu bar portion
-    context.draw(addedImageCGImage, in: menuBarPortionRect)
-
-    guard let composedImage = context.makeImage() else {
-        Log.error("Could not create composed image when merging with the wallpaper")
+    rep?.size = NSSize(width: width, height: height)
+    
+    // Create drawing context
+    NSGraphicsContext.saveGraphicsState()
+    guard let rep = rep, let context = NSGraphicsContext(bitmapImageRep: rep) else {
+        Log.error("Could not create graphics context when merging images")
+        NSGraphicsContext.restoreGraphicsState()
         return nil
     }
-
-    return NSImage(cgImage: composedImage, size: baseImage.size)
+    NSGraphicsContext.current = context
+    
+    // Draw the base image (wallpaper) at full quality
+    baseImage.draw(in: NSRect(x: 0, y: 0, width: width, height: height),
+                  from: NSRect(x: 0, y: 0, width: baseImage.size.width, height: baseImage.size.height),
+                  operation: .copy,
+                  fraction: 1.0)
+    
+    // Determine proper menu bar height - use a reasonable default if needed
+    let scaleFactor = NSScreen.main?.backingScaleFactor ?? 2.0
+    let menuBarHeight = min(addedImage.size.height, 24 * scaleFactor)
+    
+    // Draw the menu bar portion with high quality
+    addedImage.draw(in: NSRect(x: 0, y: height - menuBarHeight, width: width, height: menuBarHeight),
+                   from: NSRect(x: 0, y: 0, width: addedImage.size.width, height: menuBarHeight),
+                   operation: .sourceOver,
+                   fraction: 1.0)
+    
+    NSGraphicsContext.restoreGraphicsState()
+    
+    // Create final image from the bitmap representation
+    let finalImage = NSImage(size: NSSize(width: width, height: height))
+    finalImage.addRepresentation(rep)
+    
+    return finalImage
 }
 
 func createContext(width: CGFloat, height: CGFloat) -> CGContext? {
@@ -87,5 +108,27 @@ func colorName(_ color: NSColor) -> String {
         return AXNameFromColor(color.cgColor)
     } else {
         return color.description
+    }
+}
+
+func getOriginalWallpaper(for screen: NSScreen) -> NSImage? {
+    let workspace = NSWorkspace.shared
+    if let url = workspace.desktopImageURL(for: screen) {
+        do {
+            let imageData = try Data(contentsOf: url)
+            if let image = NSImage(data: imageData) {
+                Log.debug("Successfully loaded original wallpaper from \(url.path)")
+                return image
+            } else {
+                Log.error("Failed to convert data to NSImage")
+                return nil
+            }
+        } catch {
+            Log.error("Failed to load original wallpaper: \(error)")
+            return nil
+        }
+    } else {
+        Log.error("Could not get desktop image URL")
+        return nil
     }
 }
