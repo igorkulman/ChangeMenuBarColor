@@ -55,8 +55,20 @@ func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
         return nil
     }
 
+    // Draw the base image (wallpaper)
     context.draw(baseImageCGImage, in: CGRect(x: 0, y: 0, width: baseImage.size.width, height: baseImage.size.height))
-    context.draw(addedImageCGImage, in: CGRect(x: 0, y: baseImage.size.height - addedImage.size.height, width: addedImage.size.width, height: addedImage.size.height))
+    
+    // The original method calculated this rect incorrectly for some displays
+    // So we'll ensure we're only drawing the menu bar portion
+    let menuBarPortionRect = CGRect(
+        x: 0, 
+        y: baseImage.size.height - addedImage.size.height,
+        width: baseImage.size.width,  // Ensure we cover the full width
+        height: min(addedImage.size.height, 40 * NSScreen.main?.backingScaleFactor ?? 2) // Safety limit
+    )
+    
+    // Draw the menu bar portion
+    context.draw(addedImageCGImage, in: menuBarPortionRect)
 
     guard let composedImage = context.makeImage() else {
         Log.error("Could not create composed image when merging with the wallpaper")
