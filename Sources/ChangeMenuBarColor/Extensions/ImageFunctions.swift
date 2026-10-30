@@ -80,9 +80,8 @@ func combineImages(baseImage: NSImage, addedImage: NSImage) -> NSImage? {
                   operation: .copy,
                   fraction: 1.0)
     
-    // Determine proper menu bar height - use a reasonable default if needed
-    let scaleFactor = NSScreen.main?.backingScaleFactor ?? 2.0
-    let menuBarHeight = min(addedImage.size.height, 24 * scaleFactor)
+    // The added image is already sized to the menu bar height of the target screen
+    let menuBarHeight = addedImage.size.height
     
     // Draw the menu bar portion with high quality
     addedImage.draw(in: NSRect(x: 0, y: height - menuBarHeight, width: width, height: menuBarHeight),
