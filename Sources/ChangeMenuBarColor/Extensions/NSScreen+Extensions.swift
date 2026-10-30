@@ -13,16 +13,30 @@ extension NSScreen {
         return CGSize(width: frame.size.width * backingScaleFactor, height: frame.size.height * backingScaleFactor)
     }
 
-    var menuBarHeight: CGFloat {
-        // Get the height difference between full frame and visible frame
-        let calculatedHeight = (frame.size.height - visibleFrame.height - visibleFrame.origin.y) * backingScaleFactor
-        
-        // Apply safety limits - macOS menu bar is typically between 22-25 points
-        if calculatedHeight <= 0 || calculatedHeight > 40 {
-            Log.debug("Menu bar height calculation appears incorrect (\(calculatedHeight)), using standard height")
-            return 24 * backingScaleFactor // Standard menu bar height
+    // Menu bar height in points, or nil when it cannot be determined (e.g. auto-hidden menu bar or no menu bar on this display)
+    private var measuredMenuBarHeight: CGFloat? {
+        // Height difference between the top of the full frame and the top of the visible frame
+        var heightInPoints = frame.maxY - visibleFrame.maxY
+
+        // On displays with a notch the menu bar is taller and matches the top safe area inset
+        if #available(macOS 12.0, *) {
+            heightInPoints = max(heightInPoints, safeAreaInsets.top)
         }
-        
+
+        return heightInPoints > 0 && heightInPoints <= 60 ? heightInPoints : nil
+    }
+
+    var menuBarHeight: CGFloat {
+        let heightInPoints: CGFloat
+        if let measured = measuredMenuBarHeight {
+            heightInPoints = measured
+        } else {
+            // Fall back to the primary screen's menu bar, or the standard height
+            heightInPoints = NSScreen.screens.first?.measuredMenuBarHeight ?? 24
+            Log.debug("Menu bar height could not be calculated for this screen, using \(heightInPoints) points")
+        }
+
+        let calculatedHeight = heightInPoints * backingScaleFactor
         Log.debug("Using calculated menu bar height: \(calculatedHeight)")
         return calculatedHeight
     }
